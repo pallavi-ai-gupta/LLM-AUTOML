@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AutoML Results - LLM AutoML</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            padding: 22px 5%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 13px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            background: #444;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .hero {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 3px 10px #ccc;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .hero-icon {
+            font-size: 50px;
+        }
+
+        .hero h1 {
+            margin: 8px 0;
+        }
+
+        .hero p {
+            color: #666;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            margin-bottom: 25px;
+            border-radius: 14px;
+            box-shadow: 0 3px 10px #ddd;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .box {
+            background: #f4f6f8;
+            padding: 18px;
+            border-radius: 9px;
+        }
+
+        .box b {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .box-value {
+            font-size: 18px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .preview {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .preview table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+        }
+
+        .preview th,
+        .preview td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .preview th {
+            background: #222;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #222;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f7f7f7;
+        }
+
+        .best {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .best-model {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .llm {
+            background: #f4f6f8;
+            padding: 22px;
+            border-radius: 10px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .chart {
+            width: 100%;
+            max-width: 850px;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+        }
+
+        .chart-note {
+            color: #666;
+            text-align: center;
+        }
+
+        .buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .buttons a {
+            display: inline-block;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            padding: 13px 20px;
+            border-radius: 7px;
+            margin: 5px;
+        }
+
+        .buttons a:hover {
+            background: #444;
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 94%;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+
+            header {
+                justify-content: center;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        🤖 LLM AutoML
+    </div>
+
+    <nav>
+
+        <a href="/">
+            🏠 Dashboard
+        </a>
+
+        <a href="/analyze_page">
+            📂 Analyze
+        </a>
+
+        <a href="/predict">
+            🔮 Prediction
+        </a>
+
+        <a href="/download_report">
+            📥 Report
+        </a>
+
+        <a href="/logout"
+           onclick="return confirm('Are you sure you want to logout?');">
+
+            🚪 Logout
+
+        </a>
+
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <div class="hero-icon">
+            🎯
+        </div>
+
+        <h1>
+            AutoML Analysis Results
+        </h1>
+
+        <p>
+            Your dataset has been analyzed successfully.
+        </p>
+
+    </div>
+
+
+    <!-- DATASET INFORMATION -->
+
+    <div class="card">
+
+        <h2>
+            📊 Dataset Information
+        </h2>
+
+        <div class="grid">
+
+            <div class="box">
+
+                <b>
+                    Rows
+                </b>
+
+                <div class="box-value">
+                    {{ rows }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Columns
+                </b>
+
+                <div class="box-value">
+                    {{ columns }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Target Column
+                </b>
+
+                <div class="box-value">
+                    {{ target }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Problem Type
+                </b>
+
+                <div class="box-value">
+                    {{ problem }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DATASET PREVIEW -->
+
+    <div class="card">
+
+        <h2>
+            👀 Dataset Preview
+        </h2>
+
+        <p>
+            First 10 rows of the uploaded dataset:
+        </p>
+
+        <div class="preview">
+
+            {{ dataset_preview | safe }}
+
+        </div>
+
+    </div>
+
+
+    <!-- DATASET STATISTICS -->
+
+    <div class="card">
+
+        <h2>
+            📈 Dataset Statistics
+        </h2>
+
+        <div class="grid">
+
+            <div class="box">
+
+                <b>
+                    Total Rows
+                </b>
+
+                <div class="box-value">
+                    {{ rows }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Total Columns
+                </b>
+
+                <div class="box-value">
+                    {{ columns }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Missing Values
+                </b>
+
+                <div class="box-value">
+                    {{ missing_values }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Numerical Features
+                </b>
+
+                <div class="box-value">
+                    {{ numerical_features }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Categorical Features
+                </b>
+
+                <div class="box-value">
+                    {{ categorical_features }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DATA QUALITY -->
+
+    <div class="card">
+
+        <h2>
+            🧹 Data Quality Report
+        </h2>
+
+        <div class="grid">
+
+            <div class="box">
+
+                <b>
+                    Missing Values
+                </b>
+
+                <div class="box-value">
+                    {{ missing_values }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Duplicate Rows
+                </b>
+
+                <div class="box-value">
+                    {{ duplicates }}
+                </div>
+
+            </div>
+
+
+            <div class="box">
+
+                <b>
+                    Dataset Status
+                </b>
+
+                <div class="box-value">
+                    {{ quality_status }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- VISUALIZATION -->
+
+    <div class="card">
+
+        <h2>
+            📊 Automatic Data Visualization
+        </h2>
+
+
+        <h3>
+            🎯 Target Distribution
+        </h3>
+
+        <img
+            class="chart"
+            src="{{ url_for(
+                'static',
+                filename='target_distribution.png'
+            ) }}"
+            alt="Target Distribution"
+        >
+
+
+        <h3>
+            🔥 Feature Correlation
+        </h3>
+
+        <img
+            class="chart"
+            src="{{ url_for(
+                'static',
+                filename='correlation.png'
+            ) }}"
+            alt="Feature Correlation"
+        >
+
+
+        <h3>
+            📈 Feature Distribution
+        </h3>
+
+        <img
+            class="chart"
+            src="{{ url_for(
+                'static',
+                filename='feature_distribution.png'
+            ) }}"
+            alt="Feature Distribution"
+        >
+
+    </div>
+
+
+    <!-- LLM RECOMMENDATION -->
+
+    <div class="card">
+
+        <h2>
+            🧠 LLM Model Recommendation
+        </h2>
+
+        <div class="llm">
+
+            {{ llm_recommendation }}
+
+        </div>
+
+    </div>
+
+
+    <!-- MODEL COMPARISON -->
+
+    <div class="card">
+
+        <h2>
+            🏆 Model Comparison
+        </h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Model
+                    </th>
+
+                    <th>
+
+                        {% if problem == "Classification" %}
+
+                            Accuracy
+
+                        {% else %}
+
+                            RMSE
+
+                        {% endif %}
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for name, score in results.items() %}
+
+                <tr>
+
+                    <td>
+                        <b>{{ name }}</b>
+                    </td>
+
+                    <td>
+
+                        {% if problem == "Classification" %}
+
+                            {{ score }}%
+
+                        {% else %}
+
+                            {{ score }}
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- DETAILED EVALUATION -->
+
+    <div class="card">
+
+        <h2>
+            📋 Detailed Model Evaluation
+        </h2>
+
+        <p>
+            Performance comparison of all tested
+            machine learning models.
+        </p>
+
+
+        <div class="preview">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Model
+                        </th>
+
+
+                        {% if problem == "Classification" %}
+
+                            <th>
+                                Accuracy
+                            </th>
+
+                            <th>
+                                Precision
+                            </th>
+
+                            <th>
+                                Recall
+                            </th>
+
+                            <th>
+                                F1 Score
+                            </th>
+
+                        {% else %}
+
+                            <th>
+                                RMSE
+                            </th>
+
+                            <th>
+                                MAE
+                            </th>
+
+                            <th>
+                                R² Score
+                            </th>
+
+                        {% endif %}
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for name, metrics in detailed_results.items() %}
+
+                    <tr>
+
+                        <td>
+                            <b>{{ name }}</b>
+                        </td>
+
+
+                        {% if problem == "Classification" %}
+
+                            <td>
+                                {{ metrics["Accuracy"] }}%
+                            </td>
+
+                            <td>
+                                {{ metrics["Precision"] }}%
+                            </td>
+
+                            <td>
+                                {{ metrics["Recall"] }}%
+                            </td>
+
+                            <td>
+                                {{ metrics["F1 Score"] }}%
+                            </td>
+
+                        {% else %}
+
+                            <td>
+                                {{ metrics["RMSE"] }}
+                            </td>
+
+                            <td>
+                                {{ metrics["MAE"] }}
+                            </td>
+
+                            <td>
+                                {{ metrics["R2 Score"] }}
+                            </td>
+
+                        {% endif %}
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- BEST MODEL -->
+
+    <div class="card">
+
+        <h2>
+            🥇 Selected Best Model
+        </h2>
+
+        <div class="best">
+
+            <div class="best-model">
+                {{ best }}
+            </div>
+
+
+            {% if problem == "Classification" %}
+
+                Selected based on the highest Accuracy.
+
+            {% else %}
+
+                Selected based on the lowest RMSE.
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- MODEL PERFORMANCE -->
+
+    <div class="card">
+
+        <h2>
+            📊 Model Performance Chart
+        </h2>
+
+        <p class="chart-note">
+            Comparison of the tested machine learning models.
+        </p>
+
+        <img
+            class="chart"
+            src="{{ url_for(
+                'static',
+                filename='models.png'
+            ) }}"
+            alt="Model Performance"
+        >
+
+    </div>
+
+
+    <!-- LLM ANALYSIS -->
+
+    <div class="card">
+
+        <h2>
+            🤖 LLM Analysis
+        </h2>
+
+        <div class="llm">
+
+            {{ llm }}
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTION BUTTONS -->
+
+    <div class="buttons">
+
+        <a href="/download_report">
+            📥 Download Report
+        </a>
+
+        <a href="/predict">
+            🔮 Make Prediction
+        </a>
+
+        <a href="/analyze_page">
+            📂 Analyze Another Dataset
+        </a>
+
+        <a href="/">
+            🏠 Dashboard
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<footer>
+
+    LLM AutoML Framework
+    <br>
+
+    Construction of AutoML Framework Using LLMs
+    <br>
+
+    CSE (AI & ML)
+
+</footer>
+
+
+</body>
+
+</html>

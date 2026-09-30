@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Analyze Dataset - LLM AutoML</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            padding: 18px 5%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 13px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            background: #444;
+        }
+
+        .logout {
+            background: #555;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 35px auto;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 3px 10px #ccc;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .hero-icon {
+            font-size: 55px;
+        }
+
+        .hero h1 {
+            margin: 10px 0;
+        }
+
+        .hero p {
+            color: #666;
+            line-height: 1.7;
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .upload-card {
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 3px 10px #ccc;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .upload-area {
+            border: 2px dashed #aaa;
+            border-radius: 12px;
+            padding: 40px 20px;
+            margin-top: 20px;
+            background: #fafafa;
+        }
+
+        .upload-icon {
+            font-size: 45px;
+        }
+
+        .upload-area h2 {
+            margin: 10px 0;
+        }
+
+        .upload-area p {
+            color: #666;
+        }
+
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            background: white;
+        }
+
+        button {
+            background: #222;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .feature {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #ddd;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 35px;
+        }
+
+        .feature h3 {
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .requirements {
+            background: white;
+            padding: 30px;
+            margin-top: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #ddd;
+        }
+
+        .requirements h2 {
+            margin-top: 0;
+        }
+
+        .requirements li {
+            margin: 12px 0;
+            color: #555;
+        }
+
+        .note {
+            background: #f4f6f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 30px;
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                justify-content: center;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .hero,
+            .upload-card,
+            .requirements {
+                padding: 25px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        🤖 LLM AutoML
+    </div>
+
+
+    <nav>
+
+        <a href="/">
+            🏠 Dashboard
+        </a>
+
+        <a href="/analyze_page">
+            📂 Analyze
+        </a>
+
+        <a href="/predict">
+            🔮 Prediction
+        </a>
+
+        <a href="/download_report">
+            📥 Report
+        </a>
+
+        <a href="/logout"
+           class="logout"
+           onclick="return confirm('Are you sure you want to logout?');">
+
+            🚪 Logout
+
+        </a>
+
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- HERO SECTION -->
+
+    <div class="hero">
+
+        <div class="hero-icon">
+            🤖
+        </div>
+
+        <h1>
+            Analyze Your Dataset
+        </h1>
+
+        <p>
+
+            Upload your CSV dataset and let the
+            LLM-powered AutoML framework automatically
+            clean the data, identify the problem type,
+            train multiple machine learning models,
+            compare their performance and generate
+            intelligent insights.
+
+        </p>
+
+    </div>
+
+
+    <!-- UPLOAD SECTION -->
+
+    <div class="upload-card">
+
+        <h2>
+            📂 Upload CSV Dataset
+        </h2>
+
+        <div class="upload-area">
+
+            <div class="upload-icon">
+                📁
+            </div>
+
+            <h2>
+                Select Your Dataset
+            </h2>
+
+            <p>
+                Upload a CSV file to begin automatic analysis.
+            </p>
+
+
+            <form
+                action="/analyze"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <input
+                    type="file"
+                    name="dataset"
+                    accept=".csv"
+                    required
+                >
+
+
+                <button type="submit">
+
+                    🚀 Start AutoML Analysis
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="features">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🧹
+            </div>
+
+            <h3>
+                Automatic Cleaning
+            </h3>
+
+            <p>
+
+                Handles missing values,
+                numerical data and categorical
+                features automatically.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🧠
+            </div>
+
+            <h3>
+                AutoML Training
+            </h3>
+
+            <p>
+
+                Trains multiple machine learning
+                algorithms automatically.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h3>
+                Model Evaluation
+            </h3>
+
+            <p>
+
+                Compares models using appropriate
+                performance metrics.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🤖
+            </div>
+
+            <h3>
+                LLM Analysis
+            </h3>
+
+            <p>
+
+                Uses the local Qwen LLM to generate
+                useful dataset and model insights.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📈
+            </div>
+
+            <h3>
+                Visualization
+            </h3>
+
+            <p>
+
+                Generates charts for the dataset
+                and model performance.
+
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🔮
+            </div>
+
+            <h3>
+                Prediction
+            </h3>
+
+            <p>
+
+                Saves the trained model for
+                future predictions.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- REQUIREMENTS -->
+
+    <div class="requirements">
+
+        <h2>
+            📋 Dataset Requirements
+        </h2>
+
+
+        <ul>
+
+            <li>
+                File must be in <b>CSV format</b>.
+            </li>
+
+            <li>
+                Dataset must contain at least
+                <b>2 columns</b>.
+            </li>
+
+            <li>
+                The <b>last column</b> is treated
+                as the target column.
+            </li>
+
+            <li>
+                Both numerical and categorical
+                features are supported.
+            </li>
+
+            <li>
+                Missing values can be handled
+                automatically.
+            </li>
+
+        </ul>
+
+
+        <div class="note">
+
+            💡 <b>Tip:</b> For your project testing,
+            you can use <b>sample.csv</b> for
+            classification or <b>Regression.csv</b>
+            for regression.
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<footer>
+
+    LLM AutoML Framework
+    <br>
+
+    Construction of AutoML Framework Using LLMs
+    <br>
+
+    CSE (AI & ML)
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login - LLM AutoML</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f4f6f8, #dfe4ea);
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .card {
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.15);
+
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 5px 0;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #222;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 10px;
+
+            background: #222;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        .register {
+            margin-top: 25px;
+
+            color: #666;
+        }
+
+        .register a {
+            color: #222;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 25px;
+
+            font-size: 13px;
+
+            color: #888;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 500px) {
+
+            .card {
+                padding: 30px 22px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="card">
+
+
+        <div class="logo">
+            🤖
+        </div>
+
+
+        <h1>
+            LLM AutoML
+        </h1>
+
+
+        <p class="subtitle">
+            Intelligent Automated Machine Learning
+        </p>
+
+
+        <form
+            action="/login"
+            method="POST"
+        >
+
+
+            <div class="input-group">
+
+                <label>
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit">
+
+                🔐 Login
+
+            </button>
+
+
+        </form>
+
+
+        <div class="register">
+
+            Don't have an account?
+
+            <a href="/register">
+                Register here
+            </a>
+
+        </div>
+
+
+        <div class="footer">
+
+            Construction of AutoML Framework Using LLMs
+            <br>
+            CSE (AI & ML)
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
